@@ -40,12 +40,33 @@ Resources:
   # 4. Internet Edge Gateway (IGW)
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
-    Tags:
-      - Key: Name
-        Value: Core-Edge-Gateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Core-Edge-Gateway
 
+  # 5. Attachment
   VPCGatewayAttachment:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
       VpcId: !Ref KubaVPC
       InternetGatewayId: !Ref InternetGateway
+
+Outputs:
+  VpcId:
+    Description: 'Reference to the core VPC ID'
+    Value: !Ref KubaVPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPC-ID'
+
+  PublicSubnetId:
+    Description: 'Subnet ID for public telemetry collection endpoints'
+    Value: !Ref PublicSubnet
+    Export:
+      Name: !Sub '${AWS::StackName}-PUB-SUBNET'
+
+  PrivateSubnetId:
+    Description: 'Subnet ID for isolated database engines'
+    Value: !Ref PrivateSubnet
+    Export:
+      Name: !Sub '${AWS::StackName}-PRIV-SUBNET'
