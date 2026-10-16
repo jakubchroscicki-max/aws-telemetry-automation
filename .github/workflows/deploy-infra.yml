@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    # STEP 1: Fetch the latest code repository artifacts onto the automated runner
     - name: Checkout Code from Upstream Repository
       uses: actions/checkout@v4
 
+    # STEP 2: Authenticate the terminal session securely using repository Secrets tokens
     - name: Configure Secure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -20,13 +22,23 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-north-1
 
+    # STEP 3: Validate the core networking stack configuration schema before execution
     - name: Validate Core Network Template Syntax
       run: |
         aws cloudformation validate-template --template-body file://network-stack.yaml
 
+    # STEP 4: Orchestrate deployment updates for the fundamental network infrastructure
     - name: Deploy Core Network Stack
       run: |
         aws cloudformation deploy \
           --stack-name "KubaNetworkCore" \
           --template-file network-stack.yaml \
+          --no-fail-on-empty-changeset
+
+    # STEP 5: Automate Database Deployment Tier using exported network resources
+    - name: Deploy Core Database Stack
+      run: |
+        aws cloudformation deploy \
+          --stack-name "KubaDatabaseTier" \
+          --template-file database-stack.yaml \
           --no-fail-on-empty-changeset

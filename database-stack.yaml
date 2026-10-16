@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudOps Enterprise - Production Database Tier for Core Telemetry Storage (PostgreSQL)'
+
+Parameters:
+  NetworkStackName:
+    Type: String
+    Default: 'KubaNetworkCore'
+    Description: 'Name of the base network stack to import active VPC and Subnet IDs'
+
+Resources:
+  # 1. Stateful Firewall (Security Group) for the Database Tier
+  PostgresDatabaseSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: 'BANK-LIVE-DB: Restrict inbound access strictly to PostgreSQL port 5432'
+      VpcId: 
+        Fn::ImportValue: !Sub '${NetworkStackName}-VPC-ID'
+      SecurityGroupIngress:
+        # Secure Internal Boundary: Allow traffic on port 5432 only from within the VPC range
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 10.0.0.0/16 
+      Tags:
+        - Key: Name
+          Value: Bank-Prod-Postgres-SG
+
+  # 2. RDS DB Subnet Group: Bind the database engine into both created subnets for stability
+  RdsDbSubnetGroup:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      DBSubnetGroupDescription: 'Isolated subnets deployment group for banking database engine'
+      SubnetIds:
+        - Fn::ImportValue: !Sub '${NetworkStackName}-PUB-SUBNET'
+        - Fn::ImportValue: !Sub '${NetworkStackName}-PRIV-SUBNET'
+      Tags:
+        - Key: Name
+          Value: Bank-Prod-DB-SubnetGroup
+
+  # 3. Main PostgreSQL Database Engine Instance
+  KubaPostgresInstance:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      AllocatedStorage: '20'
+      DBInstanceClass: 'db.t4g.micro' # Highly cost-effective tier matching promotional credits
+      Engine: 'postgres'
+      EngineVersion: '16.1'
+      MasterUsername: 'kuba_admin'
+      MasterUserPassword: 'SecureTelemetryPassword2026!'
+      DBSubnetGroupName: !Ref RdsDbSubnetGroup
+      VPCSecurityGroups:
+        - !GetAtt PostgresDatabaseSecurityGroup.GroupId
+      StorageEncrypted: true # Mandatory compliance standard for data encryption at rest
+      BackupRetentionPeriod: 7
+      DeletionProtection: false # Set to false to allow automated overnight teardown commands if triggered
+      Tags:
+        - Key: Name
+          Value: Bank-Prod-Core-PostgreSQL
+
+Outputs:
+  DatabaseEndpoint:
+    Description: 'Connection endpoint for the live telemetry collection database'
+    Value: !GetAtt KubaPostgresInstance.Endpoint.Address
+    Export:
+      Name: !Sub '${AWS::StackName}-DB-Endpoint'
