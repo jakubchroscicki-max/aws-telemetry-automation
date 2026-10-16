@@ -40,7 +40,7 @@ Resources:
       AllocatedStorage: '20'
       DBInstanceClass: 'db.t4g.micro'
       Engine: 'postgres'
-      EngineVersion: '16.1'
+      EngineVersion: '16'
       MasterUsername: 'kuba_admin'
       MasterUserPassword: 'SecureTelemetryPassword2026!'
       DBSubnetGroupName: !Ref RdsDbSubnetGroup
