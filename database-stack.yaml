@@ -8,7 +8,6 @@ Parameters:
     Description: 'Name of the base network stack to import active VPC and Subnet IDs'
 
 Resources:
-  # 1. Stateful Firewall (Security Group) for the Database Tier
   PostgresDatabaseSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -16,7 +15,6 @@ Resources:
       VpcId: 
         Fn::ImportValue: !Sub '${NetworkStackName}-VPC-ID'
       SecurityGroupIngress:
-        # Secure Internal Boundary: Allow traffic on port 5432 only from within the VPC range
         - IpProtocol: tcp
           FromPort: 5432
           ToPort: 5432
@@ -25,7 +23,6 @@ Resources:
         - Key: Name
           Value: Bank-Prod-Postgres-SG
 
-  # 2. RDS DB Subnet Group: Bind the database engine into both created subnets for stability
   RdsDbSubnetGroup:
     Type: 'AWS::RDS::DBSubnetGroup'
     Properties:
@@ -37,12 +34,11 @@ Resources:
         - Key: Name
           Value: Bank-Prod-DB-SubnetGroup
 
-  # 3. Main PostgreSQL Database Engine Instance
   KubaPostgresInstance:
     Type: 'AWS::RDS::DBInstance'
     Properties:
       AllocatedStorage: '20'
-      DBInstanceClass: 'db.t4g.micro' # Highly cost-effective tier matching promotional credits
+      DBInstanceClass: 'db.t4g.micro'
       Engine: 'postgres'
       EngineVersion: '16.1'
       MasterUsername: 'kuba_admin'
@@ -50,9 +46,9 @@ Resources:
       DBSubnetGroupName: !Ref RdsDbSubnetGroup
       VPCSecurityGroups:
         - !GetAtt PostgresDatabaseSecurityGroup.GroupId
-      StorageEncrypted: true # Mandatory compliance standard for data encryption at rest
-      BackupRetentionPeriod: 7
-      DeletionProtection: false # Set to false to allow automated overnight teardown commands if triggered
+      StorageEncrypted: true
+      BackupRetentionPeriod: 0
+      DeletionProtection: false
       Tags:
         - Key: Name
           Value: Bank-Prod-Core-PostgreSQL
