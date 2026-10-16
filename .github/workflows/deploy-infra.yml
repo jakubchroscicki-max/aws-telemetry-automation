@@ -35,11 +35,11 @@ jobs:
           --template-file network-stack.yaml \
           --no-fail-on-empty-changeset
 
-        # STEP 5: Automate Database Deployment Tier using clean direct stack creation
+    # STEP 5: Automate Database Deployment Tier using deploy tool with explicit IAM capabilities
     - name: Deploy Core Database Stack
       run: |
-        aws cloudformation create-stack \
+        aws cloudformation deploy \
           --stack-name "KubaDatabaseTier" \
-          --template-body file://database-stack.yaml \
+          --template-file database-stack.yaml \
           --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
-          --region eu-north-1
+          --no-fail-on-empty-changeset
