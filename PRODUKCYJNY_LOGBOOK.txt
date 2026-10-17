@@ -1,0 +1,107 @@
+﻿==========================================================================================
+               OFFICIAL ENTERPRISE REPOSITORY MAP & OPERATIONS LOGBOOK                   
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  .github/workflows/deploy-infra.yml
+[KLASYFIKACJA]    CI/CD Pipeline Blueprint
+[ROZMIAR PLIKU]   1228 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> G??wny potok automatyzacji GitHuba. Reaguje na 'git push', loguje si? bezpiecznie kluczami do AWS w Sztokholmie i wdra?a infrastruktur? krok po kroku.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  network-stack.yaml
+[KLASYFIKACJA]    IaC Network Blueprint
+[ROZMIAR PLIKU]   2018 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Szablon AWS CloudFormation buduj?cy pancerne i bezpieczne ?rodowisko sieciowe (VPC) podzielone na Public Subnet (Frontend) oraz Private Subnet (Schron na baz?).
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  database-stack.yaml
+[KLASYFIKACJA]    IaC Storage Tier Template
+[ROZMIAR PLIKU]   2040 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Szablon CloudFormation wdra?aj?cy szyfrowan? baz? danych PostgreSQL 16 z czasem backupu ustawionym na 0 w celu zachowania ?cis?ego limitu darmowego konta AWS Free Tier.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  README.md
+[KLASYFIKACJA]    Documentation Ledger
+[ROZMIAR PLIKU]   0 Bytes
+[STATUS OPERACJI] ? BRAK PLIKU NA DYSKU
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> G??wna wizyt?wka projektu na GitHubie. Zawiera architektur? telemetryczn? banku oraz in?ynierski dziennik rozwi?zywania problem?w (Troubleshooting Report).
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  install.ps1
+[KLASYFIKACJA]    Dev Setup Automation Script
+[ROZMIAR PLIKU]   501724 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Ogromny skrypt automatyzacyjny (ponad 500 KB). S?u?y do automatycznego pobierania, instalacji i konfiguracji ?rodowiska narz?dziowego bezpo?rednio na stacjach roboczych in?ynier?w.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  matrix.py
+[KLASYFIKACJA]    MLOps Metrics Parser
+[ROZMIAR PLIKU]   2392 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Skrypt w Pythonie s?u??cy do mapowania, analizy statystycznej i strukturyzowania matrycy wydajno?ci (performance matrix) dla potok?w telemetrii i MLOps.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  cheatbook.ps1
+[KLASYFIKACJA]    Operational Runbook Code
+[ROZMIAR PLIKU]   834 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Podr?czna ?ci?gawka administracyjna w PowerShellu. Zawiera gotowe, zoptymalizowane komendy AWS CLI do szybkiej weryfikacji chmury z poziomu terminala.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  network_telemetry.log
+[KLASYFIKACJA]    Production Traffic Data Stream
+[ROZMIAR PLIKU]   70881 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Realny, produkcyjny plik log?w rejestruj?cy rzeczywisty przep?yw pakiet?w sieciowych, op??nienia i metryki wydajno?ci w czasie rzeczywistym.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  pelny_zrzut_kodu.log
+[KLASYFIKACJA]    System Diagnostics Trace Log
+[ROZMIAR PLIKU]   0 Bytes
+[STATUS OPERACJI] ? BRAK PLIKU NA DYSKU
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Plik diagnostyczny rejestruj?cy ?lad audytowy wywo?a? systemowych. U?ywany do zaawansowanego debugowania i sprawdzania stabilno?ci skrypt?w lokalnych.
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+[?CIE?KA ASSETU]  raport_wydajnosci_mlops.xlsx
+[KLASYFIKACJA]    Business Performance Matrix
+[ROZMIAR PLIKU]   49922 Bytes
+[STATUS OPERACJI] ?? ZABEZPIECZONY LOKALNIE & NA GITHUBIE
+------------------------------------------------------------------------------------------
+[LUDZKI OPIS]:
+=> Arkusz kalkulacyjny Excel zawieraj?cy zestawienia statystyczne, wykresy i analizy koszt?w operacyjnych infrastruktury chmurowej pod audyty in?ynieryjne.
+------------------------------------------------------------------------------------------
+
+==========================================================================================
+   RAPORT SKOMPILOWANY AUTOMATYCZNIE | TOTAL COMMITS: 11 | BUDGET STATUS: .00 PROTECTION
+==========================================================================================
