@@ -31,7 +31,8 @@ Resources:
     Properties:
       InstanceType: 't4g.micro' # Highly cost-effective ARM64 compute tier matching performance credits
       # Official Amazon Linux 2023 AMI tailored for system automation (eu-north-1 specific)
-      ImageId: 'ami-09a805a41ef115fa0' 
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}'
+
       SubnetId:
         Fn::ImportValue: !Sub '${NetworkStackName}-PUB-SUBNET'
       SecurityGroupIds:
