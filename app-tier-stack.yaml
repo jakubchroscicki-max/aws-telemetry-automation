@@ -35,7 +35,7 @@ Resources:
       SubnetId:
         Fn::ImportValue: !Sub '${NetworkStackName}-PUB-SUBNET'
       SecurityGroupIds:
-        - !Ref AppServerSecurityGroup
+        - !GetAtt AppServerSecurityGroup.GroupId
       # Automated UserData Bootstrap Script: Executed immediately upon infrastructure instantiation
       UserData:
         Fn::Base64: !Sub |
