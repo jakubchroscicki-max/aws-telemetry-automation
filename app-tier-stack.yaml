@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'CloudOps Enterprise - Compute Infrastructure Tier for Telemetry Ingestion Engine (Amazon EC2 Linux)'
+Description: 'CloudOps Enterprise - Compute Infrastructure Tier for Telemetry Ingestion Engine (Amazon EC2 ARM64 Linux)'
 
 Parameters:
   NetworkStackName:
@@ -16,7 +16,6 @@ Resources:
       VpcId:
         Fn::ImportValue: !Sub '${NetworkStackName}-VPC-ID'
       SecurityGroupIngress:
-        # Inbound Boundary: Allow incoming telemetry traffic on secure HTTPS port 443
         - IpProtocol: tcp
           FromPort: 443
           ToPort: 443
@@ -25,25 +24,20 @@ Resources:
         - Key: Name
           Value: Bank-Prod-AppServer-SG
 
-  # 2. Main Linux Instance running on cost-efficient AWS Graviton2 architecture
+  # 2. Main Linux Instance running on cost-efficient AWS Graviton2 architecture (ARM64)
   KubaAppInstance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      InstanceType: 't4g.micro' # Highly cost-effective ARM64 compute tier matching performance credits
-      # Official Amazon Linux 2023 AMI tailored for system automation (eu-north-1 specific)
-      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}'
-
+      InstanceType: 't4g.micro' # Pure ARM64 CPU architecture
+      # Official Amazon Linux 2023 AMI dynamically mapped SPECIFICALLY for ARM64 kernel
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64}}'
       SubnetId:
         Fn::ImportValue: !Sub '${NetworkStackName}-PUB-SUBNET'
       SecurityGroupIds:
         - !GetAtt AppServerSecurityGroup.GroupId
-      # Automated UserData Bootstrap Script: Executed immediately upon infrastructure instantiation
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          echo "=================================================="
-          echo "Initializing Automated Banking Telemetry Daemon"
-          echo "=================================================="
           yum update -y
           yum install -y postgresql16
           echo "Telemetry Ingestion Layer Active." > /var/log/telemetry_status.log
