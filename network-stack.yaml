@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'CloudOps Infrastructure - Core Network Architecture for Automated Telemetry Environment (VPC, Dual-Subnets, Internet Gateway)'
 
 Resources:
-  # 1. Main Network Perimeter (VPC)
   KubaVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
@@ -13,19 +12,17 @@ Resources:
         - Key: Name
           Value: BuildingMomentum-Core-VPC
 
-  # 2. Public-Facing Subnet (Frontend Tier for telemetry automation)
   PublicSubnet:
     Type: 'AWS::EC2::Subnet'
-    f KubaVPC
-      CidrBlock: 10.0.Properties:
-      VpcId: !Re1.0/24
+    Properties:
+      VpcId: !Ref KubaVPC
+      CidrBlock: 10.0.1.0/24
       AvailabilityZone: eu-north-1a
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
           Value: Public-Frontend-Subnet
 
-  # 3. Isolated Private Subnet (Database Tier for secure PostgreSQL)
   PrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
@@ -37,7 +34,6 @@ Resources:
         - Key: Name
           Value: Private-Database-Subnet
 
-  # 4. Internet Edge Gateway (IGW)
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
     Properties:
@@ -45,7 +41,6 @@ Resources:
         - Key: Name
           Value: Core-Edge-Gateway
 
-  # 5. Attachment
   VPCGatewayAttachment:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
