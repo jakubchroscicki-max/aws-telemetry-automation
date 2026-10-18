@@ -35,11 +35,19 @@ jobs:
           --template-file network-stack.yaml \
           --no-fail-on-empty-changeset
 
-    # STEP 5: Target the newly created EC2 Application Server template to trigger the $20 reward loop
+    # STEP 5: Deploy Core Application Stack
     - name: Deploy Core Application Stack
       run: |
         aws cloudformation deploy \
           --stack-name "KubaApplicationTier" \
           --template-file app-tier-stack.yaml \
           --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+          --no-fail-on-empty-changeset
+
+    # STEP 6: Automate Cost Control Guardrail and trigger AWS Budget reward loop
+    - name: Deploy FinOps Budget Stack
+      run: |
+        aws cloudformation deploy \
+          --stack-name "KubaBudgetTier" \
+          --template-file budget-stack.yaml \
           --no-fail-on-empty-changeset

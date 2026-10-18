@@ -31,6 +31,7 @@ def audit_network_gate(host, port):
         print(Style.GREEN + log_entry.strip() + Style.RESET)
         return log_entry
         
+        
     except socket.timeout:
         log_entry = f"[{timestamp}] STATUS: CRITICAL | Target: {host}:{port} | Error: Connection Timeout (SLA Breached)\n"
         print(Style.RED + log_entry.strip() + Style.RESET)

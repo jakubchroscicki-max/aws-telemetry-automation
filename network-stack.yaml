@@ -16,9 +16,9 @@ Resources:
   # 2. Public-Facing Subnet (Frontend Tier for telemetry automation)
   PublicSubnet:
     Type: 'AWS::EC2::Subnet'
-    Properties:
-      VpcId: !Ref KubaVPC
-      CidrBlock: 10.0.1.0/24
+    f KubaVPC
+      CidrBlock: 10.0.Properties:
+      VpcId: !Re1.0/24
       AvailabilityZone: eu-north-1a
       MapPublicIpOnLaunch: true
       Tags:
