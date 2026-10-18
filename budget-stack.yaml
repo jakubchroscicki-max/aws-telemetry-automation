@@ -1,6 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'CloudOps Enterprise - Automated Cost Control & FinOps Guardrail (AWS Budgets)'
-
 Resources:
   KubaPancernyBudget:
     Type: 'AWS::Budgets::Budget'
