@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: 'CloudOps Enterprise - Automated Cost Control & FinOps Guardrail (AWS Budgets)'
 
 Resources:
-  # Automated Financial Guardrail to maintain strict cost boundaries
   KubaPancernyBudget:
     Type: 'AWS::Budgets::Budget'
     Properties:
@@ -10,12 +9,10 @@ Resources:
         BudgetName: 'Kuba-Account-Strict-Budget-Protection'
         BudgetType: COST
         TimeUnit: MONTHLY
-        # Strictly enforce a $1.00 USD monthly maximum spending boundary
         BudgetLimit:
-          Amount: 1.0
+          Amount: 1
           Unit: USD
       NotificationsWithSubscribers:
-        # Trigger an immediate alert when forecasted or actual costs breach 80% ($0.80) of the threshold
         - Notification:
             NotificationType: ACTUAL
             ComparisonOperator: GREATER_THAN
@@ -23,9 +20,4 @@ Resources:
             ThresholdType: PERCENTAGE
           Subscribers:
             - SubscriptionType: EMAIL
-              Address: 'twoj_mail@example.com' # <--- WPISZ TUTAJ SWÓJ REALNY ADRES E-MAIL
-
-Outputs:
-  BudgetName:
-    Description: 'The unique identifier for the deployed FinOps budget guardrail'
-    Value: !Ref KubaPancernyBudget
+              Address: 'twoj_mail@example.com'
