@@ -1,4 +1,4 @@
-﻿name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
+name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
       - name: Deploy AWS Lambda Web App Tier
         run: |
           aws cloudformation deploy \
-            --stack-name "LambdaWebAppReward" \
+            --stack-name "LambdaWebAppRewardV2" \
             --template-file lambda-tier-stack.yaml \
             --capabilities CAPABILITY_NAMED_IAM \
             --no-fail-on-empty-changeset
