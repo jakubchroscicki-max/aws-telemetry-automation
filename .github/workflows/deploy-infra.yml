@@ -1,4 +1,4 @@
-name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
+﻿name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
 
 on:
   push:
@@ -8,44 +8,41 @@ on:
 jobs:
   aws-infrastructure-sprint:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Code from Upstream Repository
-      uses: actions/checkout@v4
+      - name: Checkout Code from Upstream Repository
+        uses: actions/checkout@v4
 
-    - name: Configure Secure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-north-1
+      - name: Configure Secure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
 
-    - name: Validate Core Network Template Syntax
-      run: |
-        aws cloudformation validate-template --template-body file://network-stack.yaml
+      - name: Validate Core Network Template Syntax
+        run: |
+          aws cloudformation validate-template --template-body file://network-stack.yaml
 
-    - name: Deploy Core Network Stack
-      run: |
-        aws cloudformation deploy \
-          --stack-name "KubaNetworkCore" \
-          --template-file network-stack.yaml \
-          --no-fail-on-empty-changeset
+      - name: Deploy Core Network Stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name "KubaNetworkCore" \
+            --template-file network-stack.yaml \
+            --no-fail-on-empty-changeset
 
-    - name: Deploy Core Application Stack
-      run: |
-        aws cloudformation deploy \
-          --stack-name "KubaApplicationTier" \
-          --template-file app-tier-stack.yaml \
-          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
-          --no-fail-on-empty-changeset
-      
-          - name: Deploy AWS Lambda Web App Tier
+      - name: Deploy Core Application Stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name "KubaApplicationTier" \
+            --template-file app-tier-stack.yaml \
+            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+            --no-fail-on-empty-changeset
+
+      - name: Deploy AWS Lambda Web App Tier
         run: |
           aws cloudformation deploy \
             --stack-name "LambdaWebAppReward" \
             --template-file lambda-tier-stack.yaml \
             --capabilities CAPABILITY_NAMED_IAM \
             --no-fail-on-empty-changeset
-
-
-# Force synchronization trigger to global region deployment loop
