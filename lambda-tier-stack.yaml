@@ -1,5 +1,5 @@
 ﻿AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Lambda Web App for AWS Reward'
+Description: 'CloudOps - Pure Lambda Function for AWS Reward'
 
 Resources:
   WebLambda:
@@ -12,18 +12,4 @@ Resources:
       Code:
         ZipFile: |
           def lambda_handler(event, context):
-              return {'statusCode': 200, 'headers': {'Content-Type': 'text/html'}, 'body': '<h1>Sukces</h1>'}
-
-  WebLambdaUrl:
-    Type: 'AWS::Lambda::Url'
-    Properties:
-      TargetFunctionArn: !Ref WebLambda
-      AuthType: 'NONE'
-
-  WebLambdaPermission:
-    Type: 'AWS::Lambda::Permission'
-    Properties:
-      FunctionName: !Ref WebLambda
-      Action: 'lambda:InvokeFunctionUrl'
-      Principal: '*'
-      FunctionUrlAuthType: 'NONE'
+              return {'statusCode': 200, 'body': 'Hello World'}
