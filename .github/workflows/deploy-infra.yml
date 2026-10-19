@@ -1,4 +1,4 @@
-name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
+﻿name: 'CloudOps Enterprise - Automated Banking Infra Deployment'
 
 on:
   push:
@@ -26,23 +26,12 @@ jobs:
 
       - name: Deploy Core Network Stack
         run: |
-          aws cloudformation deploy \
-            --stack-name "KubaNetworkCore" \
-            --template-file network-stack.yaml \
-            --no-fail-on-empty-changeset
+          aws cloudformation deploy --stack-name "KubaNetworkCore" --template-file network-stack.yaml --no-fail-on-empty-changeset
 
       - name: Deploy Core Application Stack
         run: |
-          aws cloudformation deploy \
-            --stack-name "KubaApplicationTier" \
-            --template-file app-tier-stack.yaml \
-            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
-            --no-fail-on-empty-changeset
+          aws cloudformation deploy --stack-name "KubaApplicationTier" --template-file app-tier-stack.yaml --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
 
       - name: Deploy AWS Lambda Web App Tier
         run: |
-          aws cloudformation deploy \
-            --stack-name "LambdaWebAppRewardV2" \
-            --template-file lambda-tier-stack.yaml \
-            --capabilities CAPABILITY_NAMED_IAM \
-            --no-fail-on-empty-changeset
+          aws cloudformation deploy --stack-name "LambdaWebAppRewardV3" --template-file lambda-tier-stack.yaml --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset
