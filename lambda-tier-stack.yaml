@@ -2,27 +2,12 @@
 Description: 'Lambda Web App for AWS Reward'
 
 Resources:
-  LambdaRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2010-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - ://amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-
   WebLambda:
     Type: 'AWS::Lambda::Function'
     Properties:
       FunctionName: 'CloudOps-WebApp-Reward'
       Handler: 'index.lambda_handler'
-      Role: !GetAtt LambdaRole.Arn
+      Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/LabRole'
       Runtime: 'python3.11'
       Code:
         ZipFile: |
