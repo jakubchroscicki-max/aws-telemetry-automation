@@ -1,0 +1,38 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Lambda Web App for AWS Reward'
+Resources:
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2010-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [://amazonaws.com]
+            Action: ['sts:AssumeRole']
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+  WebLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: 'CloudOps-WebApp-Reward'
+      Handler: 'index.lambda_handler'
+      Role: !GetAtt LambdaRole.Arn
+      Runtime: 'python3.11'
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+              return {'statusCode': 200, 'headers': {'Content-Type': 'text/html'}, 'body': '<h1>Sukces</h1>'}
+  WebLambdaUrl:
+    Type: 'AWS::Lambda::Url'
+    Properties:
+      TargetFunctionArn: !Ref WebLambda
+      AuthType: 'NONE'
+  WebLambdaPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref WebLambda
+      Action: 'lambda:InvokeFunctionUrl'
+      Principal: '*'
+      FunctionUrlAuthType: 'NONE'

@@ -1,0 +1,9 @@
+﻿{
+    "BudgetName": "Kuba-Strict-FinOps-Guardrail",
+    "BudgetLimit": {
+        "Amount": "1",
+        "Unit": "USD"
+    },
+    "BudgetType": "COST",
+    "TimeUnit": "MONTHLY"
+}
